@@ -1,9 +1,11 @@
 
 import './App.css';
-import City from './user/component/City';
-import CityFun from './user/component/CityFun';
-import CountryFun from './user/component/CountryFun';
-import Country from './user/component/country';
+// import City from './user/component/City';
+// import CityFun from './user/component/CityFun';
+import Counter from './user/component/Counter';
+import CounterClass from './user/component/CounterClass';
+// import CountryFun from './user/component/CountryFun';
+// import Country from './user/component/country';
 
 
 function App() {
@@ -26,10 +28,12 @@ function App() {
     // </div>
     <>
 
-      <Country />
-      <City />
+      {/* <Country /> */}
+      {/* <City />
       <CountryFun />
-      <CityFun />
+      <CityFun /> */}
+    <Counter/>
+<CounterClass/>      
     </>
 
   );
