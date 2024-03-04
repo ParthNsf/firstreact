@@ -1,5 +1,6 @@
 
 import './App.css';
+import CityFunProp from './user/component/CityNameProps';
 // import City from './user/component/City';
 // import CityFun from './user/component/CityFun';
 import Counter from './user/component/Counter';
@@ -34,6 +35,7 @@ function App() {
       <CityFun /> */}
     <Counter/>
 <CounterClass/>      
+<CityFunProp changeCityProp="Nevada" changeStateProp="Las Vegas"/>
     </>
 
   );
