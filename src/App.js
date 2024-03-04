@@ -1,27 +1,51 @@
 
 import './App.css';
-// import Card from './user/component/card/Card';
-import Doctors from './user/containers/Doctors/Doctors';
-import Medicine from './user/containers/Medicine/Medicine1';
-// import City from './user/component/City';
-// import CityFun from './user/component/CityFun';
-// import CountryFun from './user/component/CountryFun';
-// import Country from './user/component/country';
+import ExampleLifeCycle from './user/containers/LifeCycleMethods/ExampleLifeCycle';
+import React, { Component } from 'react'
+
+export default class App extends Component {
+  constructor(){
+    super()
+
+    this.state ={
+      mount : true,
+      ignoreprop : 0,
+      score: 10
+    }
 
 
+    this.MountCount = () => {
+      this.setState({mount : true})
+    }
 
-function App() {
-  return (
-    <>
-      {/* <Country />
-      <City />
-      <CountryFun />
-      <CityFun /> */}
-    <Medicine/>
-    <Doctors/>
-    </>
+    this.UnMountCount = () => {
+      this.setState({mount : false})
+    }
 
-  );
+    this.ignoreprop = () => {
+      this.setState({ignoreprop: Math.random()})
+    }
+
+    this.scoresender = () => {
+      this.setState({score: Number.parseInt(Math.random()* 10)})
+    }
+  }
+  render() {
+    return (
+      <div><>
+        <button style={{padding: 50, margin: 15}} onClick={this.MountCount} disabled = {this.state.mount}>Mount Count Enable</button>
+        <button onClick={this.UnMountCount} disabled = {!this.state.mount}>Mount Count Desable</button>
+        <button onClick={this.ignoreprop}>Ignore Prop</button>
+        <button onClick={this.scoresender}>Score Send</button>
+        {this.state.mount ? <ExampleLifeCycle
+        ignoreprop = {this.state.ignoreprop}
+        score={this.state.score}
+        /> : null }
+      </>
+      
+         
+      </div>
+    )
+  }
 }
 
-export default App;
