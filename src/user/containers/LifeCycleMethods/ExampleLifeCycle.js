@@ -62,9 +62,9 @@ export default class ExampleLifeCycle extends Component {
         
       <div>
         <>
-          <button onClick={this.Increment}>Increment</button>
+          <button style={{padding: 50, margin: 15}} onClick={this.Increment}>Increment</button>
           Counter:{this.state.counter}
-          <button onClick={this.Decrement}>Decrement</button>
+          <button style={{padding: 50, margin: 15}}  onClick={this.Decrement}>Decrement</button>
           {/* <CustomError/> */}
         </>
       </div>

@@ -1,0 +1,15 @@
+.card{
+    background-color: aqua;
+    width: 100px;
+    text-align: center;
+    
+}
+.container{
+    width: 200px;
+    height: 200px;
+    justify-content: center;
+    padding: 50px;
+    margin: 50px;
+    border-radius: 20%;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
