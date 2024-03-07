@@ -1,4 +1,4 @@
-.Card{
+.Card {
     width: 100%;
     height: 60px;
     background-color: #131921;
@@ -6,17 +6,25 @@
     display: flex;
     justify-content: center;
 }
-.Sub_header{
-    background-color:#232f3e;
+
+.Sub_header {
+    background-color: #232f3e;
     width: 100%;
     height: 40px;
 }
-.inputsearch{
+
+.inputsearch {
     width: 670px;
     height: 38px;
     margin: 10px auto;
     padding: 12px;
-    
+
+}
+
+.selectcard {
+   align-items: center;
+   margin: 10px auto;
+   justify-content: center;
 }
 
 

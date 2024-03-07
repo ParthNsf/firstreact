@@ -11,6 +11,8 @@ import {
 
 function Product(props) {
   const [productData, setProductData] = useState([]);
+  const [searchData, setSearchData] = useState('');
+  const [sort,setsort] =useState('')
 
   useEffect(() => {
     getData();
@@ -22,19 +24,33 @@ function Product(props) {
     setProductData(data);
   };
 
-  const search = () => {
-    const searchQuery = document.getElementById("search").value.toLowerCase();
+  const handleFiltter = () => {
+    let fdata = productData.filter((v) => 
+       v.title.toLowerCase().includes(searchData) || v.description.toLowerCase().includes(searchData) || v.price.toString().includes(searchData)
+    );
 
-    if (searchQuery) {
-      const filteredData = productData.filter((product) =>
-        product.title.toLowerCase().includes(searchQuery)
-      );
-      setProductData(filteredData);
-    } else {
-        setProductData(productData)
-    }
-  };        
+    const sort1 = fdata.sort((a, b) => {
+      if (sort === 'hl') {
+        return b.price - a.price;
+      } else if (sort === 'lh') {
+        return a.price - b.price;
+      } else if (sort === 'az') {
+        return a.title.localeCompare(b.title);
+      } else if (sort === 'za') {
+        return b.title.localeCompare(a.title);
+      }
+    });
 
+    return fdata
+  };
+  
+  
+  const fineldata = handleFiltter()
+
+  console.log(fineldata);
+
+
+ //  
   return (
     <>
       <div className={style.Card}>
@@ -42,15 +58,22 @@ function Product(props) {
           className={style.inputsearch}
           type="text"
           placeholder="Search..."
-          id="search"
-          onKeyUp={search}
+          onChange={(event) => setSearchData(event.target.value)}
         ></input>
       </div>
-      <div className={style.Sub_header}></div>
+      <div className={style.Sub_header}>
+        <select onChange={(e)=>setsort(e.target.value)} className={style.selectcard}>
+          <option value='0'>--Select--</option>
+          <option value='hl'>High to Low</option>
+          <option value='lh'>Loe to High</option>
+          <option value='az'>A to Z</option>
+          <option value='za'>Z to A</option>
+
+        </select>
+      </div>
       <div className="container">
         <div className="row">
-          {productData.length > 0 ? (
-            productData.map((v, i) => (
+          {fineldata.map((v, i) => (
               <div className="col-md-4 gy-5" key={i}>
                 <Card
                   style={{
@@ -67,7 +90,7 @@ function Product(props) {
                     src={v.image}
                   />
                   <CardBody>
-                    <CardTitle tag="h5">{v.title.substring(0, 8)}</CardTitle>
+                    <CardTitle tag="h5">{v.title.length > 20 ? v.title.substring(0, 20) + "..." : v.title}</CardTitle>
                     <CardSubtitle className="mb-2 text-muted" tag="h6">
                       ${v.price}
                     </CardSubtitle>
@@ -75,7 +98,7 @@ function Product(props) {
                       <h6 style={{ display: "inline-block" }}>Category : </h6>{" "}
                       {v.category}
                     </CardText>
-                    <CardText>{v.description.substring(0, 70)}</CardText>
+                    <CardText>{v.description.length > 50 ? v.description.substring(0, 100) + "..." : v.description}</CardText>
                     <Button
                       style={{
                         backgroundColor: "#232f3e",
@@ -87,12 +110,7 @@ function Product(props) {
                   </CardBody>
                 </Card>
               </div>
-            ))
-          ) : (
-            <div className="col-md-12">
-              <p>Loading...</p>
-            </div>
-          )}
+            ))}
         </div>
       </div>
     </>
