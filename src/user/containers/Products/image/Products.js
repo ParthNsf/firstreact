@@ -13,7 +13,8 @@ function Product(props) {
   const [productData, setProductData] = useState([]);
   const [searchData, setSearchData] = useState("");
   const [sort, setSort] = useState("");
-  const [category, setCategory] = useState("women's clothing");
+  const [category, setCategory] = useState([]);
+  const [selectedcategory, setselectedcategory] = useState('');
 
   useEffect(() => {
     getData();
@@ -22,6 +23,16 @@ function Product(props) {
   const getData = async () => {
     const response = await fetch("https://fakestoreapi.com/products");
     const data = await response.json();
+
+    let unique = [];
+
+    data.map((v) => {
+      if (!unique.includes(v.category)) {
+        unique.push(v.category);
+      }
+    });
+
+    setCategory(unique);
     setProductData(data);
   };
 
@@ -33,32 +44,27 @@ function Product(props) {
         v.price.toString().includes(searchData)
     );
 
-    if (category) {
-      filteredData = filteredData.filter((v) => v.category === category);
-    }
+    filteredData.sort((a, b) => {
+      if (sort === "hl") {
+        return b.price - a.price;
+      } else if (sort === "lh") {
+        return a.price - b.price;
+      } else if (sort === "az") {
+        return a.title.localeCompare(b.title);
+      } else if (sort === "za") {
+        return b.title.localeCompare(a.title);
+      }
+    });
 
-    if (sort) {
-      filteredData.sort((a, b) => {
-        if (sort === "hl") {
-          return b.price - a.price;
-        } else if (sort === "lh") {
-          return a.price - b.price;
-        } else if (sort === "az") {
-          return a.title.localeCompare(b.title);
-        } else if (sort === "za") {
-          return b.title.localeCompare(a.title);
-        }
-      });
+
+    if (selectedcategory) {
+      filteredData = filteredData.filter((v) => v.category === selectedcategory);
     }
 
     return filteredData;
   };
 
   const finalData = handleFilter();
-
-  const handleCategoryChange = (newCategory) => {
-    setCategory(newCategory);
-  };
 
   return (
     <>
@@ -82,50 +88,27 @@ function Product(props) {
           <option value="az">A to Z</option>
           <option value="za">Z to A</option>
         </select>
+        <Button
+         style={{backgroundColor: selectedcategory === '' ? 'red' : ''}}
+          className={style.selectcard}
+          onClick={() => setselectedcategory('')}
+        >
+          all
+        </Button>
+        {
 
-        <div id="myDIV">
-          <button
-            style={{
-              // border: "2px solid white",
-              margin: "10px 10px",
-              border: "none",
-              outline: "none",
-              padding: "10px 16px",
-              backgroundColor: "#f1f1f1",
-              cursor: "pointer;",
-              borderRadius: '10px'
-            }}
-            className={"all"}
-            onClick={() => handleCategoryChange()}
-          >
-            All
-          </button>
-          <button
-         
-            className={category === "men's clothing" ? "btn active" : "btn"}
-            onClick={() => handleCategoryChange("men's clothing")}
-          >
-            Men's clothing
-          </button>
-          <button
-            className={category === "women's clothing" ? "btn active" : "btn"}
-            onClick={() => handleCategoryChange("women's clothing")}
-          >
-            Women's clothing
-          </button>
-          <button
-            className={category === "electronics" ? "btn active" : "btn"}
-            onClick={() => handleCategoryChange("electronics")}
-          >
-            Electronics
-          </button>
-          <button
-            className={category === "jewelery" ? "btn active" : "btn"}
-            onClick={() => handleCategoryChange("jewelery")}
-          >
-            Jewelry
-          </button>
-        </div>
+          category.map((v, i) => (
+            <Button
+            style={{backgroundColor: selectedcategory === v ? 'red' : ''}}
+              className={style.selectcard}
+              key={i}
+              onClick={() => setselectedcategory(v)}
+            >
+              {v}
+            </Button>
+          ))
+        }
+
       </div>
       <div className="container">
         <div className="row">
