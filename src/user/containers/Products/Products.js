@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import style from "./Product.module.css";
 import { Button, Card, CardBody, CardSubtitle, CardText, CardTitle } from "reactstrap";
-import Loader from "./Loader";
+// import Loader from "./Loader";
 
 function Product(props) {
   const [productData, setProductData] = useState([]);
@@ -62,7 +62,7 @@ function Product(props) {
 
   return (
     <>
-      {loading ? <Loader /> : null}
+      {/* {loading ? <Loader /> : null} */}
       <div className={style.Card}>
         <input
           className={style.inputsearch}
@@ -73,6 +73,8 @@ function Product(props) {
         />
       </div>
       <div className={style.Sub_header}>
+
+        
         <select
           onChange={(e) => setSort(e.target.value)}
           className={style.selectcard}
